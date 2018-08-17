@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+		<meta name = "format-detection" content="telephone = no" />
+		<title>领奖大厅</title>
+		<link type="text/css" href="css/Xcompany.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/font.js"></script>
+		<style type="text/css">
+			*,body{box-sizing:border-box;-webkit-box-sizing: border-box;}
+			body{font-size: 1.2rem;}
+			.vb{visibility: hidden;}
+			.tanc_beij{width: 100%;height: 100%;position: fixed;left: 0;top: 0;background: rgba(0,0,0,0.7);z-index: 9;}
+			.doll{max-width: 640px;min-width: 320px;margin: 0 auto;}
+			.doll_beij img{position: fixed;width: 100%;height: 100%;left: 0;top: 0;}
+			.doll_title{width: 44%;position: fixed;left:28%;top:2%;z-index: 2;}
+			.doll_rule{width: 24%;position: fixed;right:4%;top: 0;}
+			.doll_btn{width: 46%;position: fixed;left:27%;bottom:4%;}
+			.doll_btn label{display: block;width: 100%;height: 100%;position: absolute;left: 0;top: 0;display:none;}
+			.rule_text,.win_text{width:75%;position: fixed;left:12.5%;top:25%;z-index: 10;}
+			.rule_text .rule_close{width:100%;margin:0 0 5% 0;overflow: hidden;}
+			.rule_text .rule_close img{width: 9%;float: right;}
+			.win_text{text-align: center;background: #fff;border:0.3rem solid #aaddff;border-radius:0.8rem;padding:4% 0;}
+			.win_title{width:100%;margin: 0 auto;font-size: 1.35rem;color: #333;font-weight:600;line-height: 130%;}
+			.win_img{position: relative;width: 91%;margin:0 auto;}
+			.win_img_shop{position: absolute;width: 50%;left: 25%;top: 0;}
+			.win_btn{margin-top: 3%;padding-top:4%;border-top:1px solid #d3d7da;text-align: center;}
+			.win_btn a{display: inline-block;width:35%;}
+			.win_btn a.btn_continue{margin-right:8%;}
+			.win_btn a.btn_lingjiang{margin-left:8%;}
+			.doll_zhua{width:28%;position: fixed;z-index:1;left:36.5%;top:8%;text-align: center;height:70%;z-index: 1;}
+			.zhua_line{width:10px;background: #b2ccff;border-left:3px solid #377bd1;border-right:3px solid #377bd1;margin:0 auto;position: relative;z-index: 3;height:10%;
+			   -webkit-transition: all 1000ms ease-in-out;
+               transition: all 1000ms ease-in-out;
+			}
+			.zhua_line.zj{height:69%;}
+			.zhua_zj{margin-top:-2px;position: relative;z-index:2;}
+			.zhua_jiangpin{width:78%;margin:-50% auto 0;}
+			.doll_list{width: 92%;position: fixed;left: 4%;top:8%;overflow:hidden;height:70%;}
+			.doll_list_behind ul{position: absolute;left: 0;top:71.6%;
+			    -webkit-transition: all 500ms ease-in-out;
+                transition: all 500ms ease-in-out;
+			}
+			.doll_list_behind ul.ani{
+				animation:ani1 14.0s linear 0s infinite normal;
+               -webkit-animation:ani1 14.0s linear 0s infinite normal;
+			}
+			.doll_list_behind ul.ani_1{
+				animation:ani1_1 23.0s linear 0s infinite normal;
+               -webkit-animation:ani1_1 23.0s linear 0s infinite normal;
+			}
+			.doll_list_front ul{position: absolute;left: 0;top:78%;
+			   -webkit-transform:translateX(-5%);transform:translateX(-5%);
+			   -webkit-transition: all 500ms ease-in-out;
+                transition: all 500ms ease-in-out;
+			}
+			.doll_list_front ul.ani2{
+				animation:ani2 14.0s linear 0s infinite normal;
+               -webkit-animation:ani2 14.0s linear 0s infinite normal;
+			}
+			.doll_list_front ul.ani2_1{
+				animation:ani2_1 23.0s linear 0s infinite normal;
+               -webkit-animation:ani2_1 23.0s linear 0s infinite normal;
+			}
+			.doll_list_behind ul,.doll_list_front ul{white-space: nowrap;width: 100%;}
+			.doll_list_behind li,.doll_list_front li{width:25%;position: relative;display: inline-block;}
+			.doll_list_behind li .box{width:65%;margin:0 auto;}
+			.doll_list_front li{width:33%;}
+			.doll_list_front li .box{width:72%;margin:0 auto;position: relative;}
+			.doll_list_front li .box i{width: 1.0rem;display: block;position: absolute;left: 0;top: 0;opacity: 0;}
+			.zhua_jiangpin img{
+				-webkit-transition: all 500ms ease-in-out;
+                transition: all 500ms ease-in-out;
+			}
+			.zhua_jiangpin img.imgAni{
+               animation:aniImg 1.0s ease-out 0s 1 forwards;
+               -webkit-animation:aniImg 1.0s ease-out 0s 1 forwards;
+			}
+			
+			@keyframes ani1{
+				 0%{transform:translateX(0);-webkit-transform:translateX(0);}
+			   100%{transform: translateX(-216.2%);-webkit-transform: translateX(-216.2%);}
+			}
+			@-webkit-keyframes ani1{
+				 0%{transform:translateX(0);-webkit-transform:translateX(0);}
+			   100%{transform: translateX(-216.2%);-webkit-transform: translateX(-216.2%);}
+			}
+			@keyframes ani1_1{
+				0%{transform:translateX(-6%);-webkit-transform:translateX(-6%);}
+			   100%{transform: translateX(-216.2%);-webkit-transform: translateX(-216.2%);}
+			}
+			@-webkit-keyframes ani1_1{
+				 0%{transform:translateX(-6%);-webkit-transform:translateX(-6%);}
+			   100%{transform: translateX(-216.2%);-webkit-transform: translateX(-216.2%);}
+			}
+			@keyframes ani2{
+				 0%{transform: translateX(-170.2%);-webkit-transform: translateX(-170.2%);}
+			   100%{transform:translateX(-5%);-webkit-transform:translateX(-5%);}
+			}
+			@-webkit-keyframes ani2{
+				  0%{transform: translateX(-170.2%);-webkit-transform: translateX(-170.2%);}
+			   100%{transform:translateX(-5%);-webkit-transform:translateX(-5%);}
+			}
+			@keyframes ani2_1{
+				 0%{transform: translateX(-278%);-webkit-transform: translateX(-278%);}
+			    100%{transform:translateX(-5%);-webkit-transform:translateX(-5%);}
+			}
+			@-webkit-keyframes ani2_1{
+				  0%{transform: translateX(-278%);-webkit-transform: translateX(-278%);}
+			    100%{transform:translateX(-5%);-webkit-transform:translateX(-5%);}
+			}
+			
+			@keyframes aniImg{
+				 0%{transform: scale(0.2,0.2);-webkit-transform: scale(0.2,0.2);}
+			   100%{left:100%;top:-10%;transform: scale(0.2,0.2);-webkit-transform: scale(0.2,0.2);opacity: 0;}
+			}
+			@-webkit-keyframes aniImg{
+				  0%{transform: scale(0.2,0.2);-webkit-transform: scale(0.2,0.2);}
+			   100%{left:100%;top:-10%;transform: scale(0.2,0.2);-webkit-transform: scale(0.2,0.2);opacity: 0;}
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="doll" id="doll">
+			<div class="doll_beij"><img src="images/beij.jpg"></div>
+			<div class="doll_title"><img src="images/title.png"></div>
+			<div class="doll_rule"><img src="images/btn_rule.png"></div>
+			<!--爪子-->
+			<div class="doll_zhua">
+				<div class="zhua_line"></div>
+				<div class="zhua_zj"><img src="images/jiaz_1.png"></div>
+				<div class="zhua_jiangpin"><img src="images/beij_img1.png"></div>
+			</div>
+			<!--奖品-->
+			<div class="doll_list">
+				<div class="doll_list_behind">
+					<ul class="ani">
+						<li><div class="box"><img src="images/sp8.png"></div></li>
+						<li><div class="box"><img src="images/sp7.png"></div></li>
+						<li><div class="box"><img src="images/sp6.png"></div></li>
+						<li><div class="box"><img src="images/sp5.png"></div></li>
+						<li><div class="box"><img src="images/sp4.png"></div></li>
+						<li><div class="box"><img src="images/sp3.png"></div></li>
+						<li><div class="box"><img src="images/sp2.png"></div></li>
+						<li><div class="box"><img src="images/sp1.png"></div></li>
+						<li><div class="box"><img src="images/sp8.png"></div></li>
+						<li><div class="box"><img src="images/sp7.png"></div></li>
+						<li><div class="box"><img src="images/sp6.png"></div></li>
+						<li><div class="box"><img src="images/sp5.png"></div></li>
+					</ul>
+				</div>
+				<div class="doll_list_front">
+					<ul class="ani2">
+						<li data-name="20元话费充值卡" title="2200金豆"><div class="box"><img src="images/sp1.png"><i><img src="images/shop1.png"></i></div></li>
+						<li data-name="50元话费充值卡" title="5500金豆"><div class="box"><img src="images/sp2.png"><i><img src="images/shop2.png"></i></div></li>
+						<li data-name="100元话费充值卡" title="11000金豆"><div class="box"><img src="images/sp3.png"><i><img src="images/shop3.png"></i></div></li>
+						<li data-name="1000元话费充值卡" title="110000金豆"><div class="box"><img src="images/sp4.png"><i><img src="images/shop4.png"></i></div></li>
+						<li data-name="黄金2g" title="70000金豆"><div class="box"><img src="images/sp5.png"><i><img src="images/shop5.png"></i></div></li>
+						<li data-name="小米6手机" title="299900金豆"><div class="box"><img src="images/sp6.png"><i><img src="images/shop6.png"></i></div></li>
+						<li data-name="iPhoneX手机" title="880000金豆"><div class="box"><img src="images/sp7.png"><i><img src="images/shop7.png"></i></div></li>
+						<li data-name="苹果电脑macbook" title="1100000金豆"><div class="box"><img src="images/sp8.png"><i><img src="images/shop8.png"></i></div></li>
+						<li data-name="20元话费充值卡" title="2200金豆"><div class="box"><img src="images/sp1.png"><i><img src="images/shop1.png"></i></div></li>
+						<li data-name="50元话费充值卡" title="5500金豆"><div class="box"><img src="images/sp2.png"><i><img src="images/shop2.png"></i></div></li>
+						<li data-name="100元话费充值卡" title="11000金豆"><div class="box"><img src="images/sp3.png"><i><img src="images/shop3.png"></i></div></li>
+					</ul>
+				</div>
+			</div>
+			<!--开始按钮-->
+			<div class="doll_btn">
+				<label></label>
+				<img src="images/btn_start.png">
+			</div>
+			<!--规则弹窗-->
+			<div class="rule" style="display: none;">
+				<div class="tanc_beij"></div>
+				<div class="rule_text">
+					<div class="rule_close"><img src="images/btn_close.png"></div>
+					<div class="rule_info"><img src="images/img_rule.png"></div>
+				</div>
+			</div>
+			<!--中奖弹窗-->
+			<div class="win" style="display: none;">
+				<div class="tanc_beij"></div>
+				<div class="win_text">
+					<div class="win_title"><span class="win_kaitou">差一点点，继续努力哦！</span><span class="win_shop"></span><br><span class="win_other"></span><span class="win_gold"></span></div>
+					<div class="win_img">
+						<div class="win_img_beij"><img src="images/beij_img2.png"></div>
+						<div class="win_img_shop"><img src="images/low.png"></div>
+					</div>
+					<div class="win_btn">
+						<a href="javascript:;" class="btn_continue"><img src="images/btn_continue.png"></a>
+						<!--<a href="javascript:;" class="btn_guangbi"><img src="images/btn_guangbi.png"></a>-->
+						<a href="http://www.huanlejc.com/html/download/d?i=24" class="btn_lingjiang" style="display: none;"><img src="images/btn_lingjiang.png"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+ 		  document.getElementById("doll").addEventListener('touchmove', function (event) {
+		    event.preventDefault();
+		  }, false);
+ 	    </script>
+ 	    <script type="text/javascript">
+ 	    	var pum,zhuaLeft,ltList,ltLength,gdLeft,gdTop,gdWidth;
+ 	    	$(function(){
+ 	    		$(".doll_btn img").click(function(){
+   	    			zhuaLeft=$(".zhua_zj").offset().left;
+ 	    			ltList=$(".doll_list_front li");
+ 	    			ltLength=ltList.length;
+ 	    			gdLeft=$(".zhua_jiangpin").offset().left;
+ 	    			gdTop=$(".zhua_jiangpin").offset().top;
+ 	    			gdWidth=$(".zhua_jiangpin").width();
+ 	    			$(this).attr("src","images/btn_start_1.png");
+ 	    			$(".doll_btn label").show();
+ 	    			$(".zhua_line").addClass("zj");
+   	    			$(".zhua_zj").find("img").attr("src","images/jiaz_2.png");
+ 	    			setTimeout(function(){
+ 	    				$(".zhua_line").removeClass("zj");
+                        for(var i=0;i<ltLength;i++){
+	 	    				var zjLeft=$(ltList[i]).offset().left;
+	 	    				if(zjLeft-zhuaLeft>=-50&&zjLeft-zhuaLeft<=50){
+	 	    					$(ltList[i]).addClass("vb");
+	 	    					var zjImg=$(ltList[i]).find("img").attr("src");
+	 	    					var zjName=$(ltList[i]).attr("data-name");
+	 	    					var zjGold=$(ltList[i]).attr("title");
+	 	    					var zjShop=$(ltList[i]).find("i").children("img").attr("src");
+	 	    					$(".zhua_jiangpin").find("img").attr("src",zjImg);
+	 	    					$(".win_shop").text(zjName);
+	 	    					$(".win_gold").text(zjGold);
+	 	    					$(".win_img_shop").find("img").attr("src",zjShop);
+	 	    					$(".win_kaitou").text("恭喜您抓中了");
+	 	    					$(".win_other").text("领奖将消耗");
+	 	    					$(".btn_lingjiang").show();
+	 	    				}
+	 	    			}
+ 	    			},1200);
+ 	    			
+ 	    			setTimeout(function(){
+	 	    				$(".zhua_jiangpin img").css({"position":"fixed","left":gdLeft,"top":gdTop,"width":gdWidth});
+	    			},2600);
+	    			setTimeout(function(){
+	    				$(".zhua_zj").find("img").attr("src","images/jiaz_1.png");
+	    				$(".zhua_jiangpin img").addClass("imgAni");
+	    			},2700);
+	    			setTimeout(function(){
+	    				$(".zhua_jiangpin img").remove();
+	    			},3500);
+                    setTimeout(function(){
+	    				$(".win").show();
+	    				$(".doll_list_front li").removeClass("vb");
+	    				$(".doll_btn label").hide();
+	    				$(".doll_btn img").attr("src","images/btn_start.png");
+	    				$(".zhua_jiangpin").append("<img src='images/beij_img1.png'>");
+	    			},3600);
+                    
+                    
+ 	    		});
+   	    		setInterval(function(){
+   	    			$(".doll_list_front ul").removeClass("ani2");
+   	    			$(".doll_list_front ul").addClass("ani2_1");
+   	    		},14000);
+   	    		setInterval(function(){
+   	    			$(".doll_list_behind ul").removeClass("ani");
+   	    			$(".doll_list_behind ul").addClass("ani_1");
+   	    		},14000);
+ 	    		
+ 	    		$(".doll_rule").click(function(){
+ 	    			$(".rule").show();
+ 	    		});
+ 	    		$(".rule_close,.rule .tanc_beij").click(function(){
+ 	    			$(".rule").hide();
+ 	    		});
+ 	    		$(".win_btn a").click(function(){
+ 	    			$(".win").hide();
+ 	    			setTimeout(function(){
+ 	    				$(".win_shop").text("");
+    					$(".win_gold").text("");
+    					$(".win_img_shop").find("img").attr("src","images/low.png");
+    					$(".win_kaitou").text("差一点点，继续努力哦！");
+    					$(".win_other").text("");
+    					$(".btn_lingjiang").hide();
+ 	    			},1500)
+ 	    		})
+ 	    		
+ 	    	})
+
+
+ 	    </script>
+	</body>
+</html>
